@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const { createPool } = require("./db");
-
+const { uploadToS3 } = require("./s3");
 dotenv.config();
 
 const app = express();
@@ -10,7 +10,59 @@ const pool = createPool();
 
 app.disable("x-powered-by");
 app.use(express.json());
+app.post("/api/products/:id/image", async (req, res) => {
+  try {
+    const productId = Number(req.params.id);
+    const { fileName, contentType, data } = req.body;
 
+    if (!Number.isInteger(productId)) {
+      return res.status(400).json({ error: "Invalid product ID" });
+    }
+
+    if (!fileName || !contentType || !data) {
+      return res.status(400).json({
+        error: "fileName, contentType and data are required"
+      });
+    }
+
+    const [products] = await pool.query(
+      "SELECT id FROM products WHERE id = ?",
+      [productId]
+    );
+
+    if (products.length === 0) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    const key = `products/${productId}/${Date.now()}-${fileName}`;
+
+    const body = Buffer.from(data, "base64");
+
+    await uploadToS3({
+      key,
+      body,
+      contentType
+    });
+
+    await pool.query(
+      "UPDATE products SET image_key = ? WHERE id = ?",
+      [key, productId]
+    );
+
+    res.status(201).json({
+      message: "Product image uploaded successfully",
+      productId,
+      imageKey: key
+    });
+
+  } catch (error) {
+    console.error("Product image upload failed:", error.message);
+
+    res.status(500).json({
+      error: "Unable to upload product image"
+    });
+  }
+});
 app.get("/health", async (req, res) => {
   try {
     await pool.query("SELECT 1");
@@ -33,7 +85,7 @@ app.get("/", (req, res) => {
 app.get("/api/products", async (req, res) => {
   try {
     const [rows] = await pool.query(
-      "SELECT id, name, description, price, stock, created_at FROM products ORDER BY id DESC"
+      "SELECT id, name, description, price, stock, image_key, created_at FROM products ORDER BY id DESC",
     );
     res.json(rows);
   } catch (error) {
@@ -44,9 +96,7 @@ app.get("/api/products", async (req, res) => {
 
 app.get("/api/products/:id", async (req, res) => {
   try {
-    const [rows] = await pool.query(
-      "SELECT id, name, description, price, stock, created_at FROM products WHERE id = ?",
-      [req.params.id]
+    const [rows] = await pool.query("SELECT id, name, description, price, stock, image_key, created_at FROM products WHERE id = ?",   [req.params.id]
     );
 
     if (rows.length === 0) {
