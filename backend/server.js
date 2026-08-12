@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const dotenv = require("dotenv");
 const { createPool } = require("./db");
 const { uploadToS3 } = require("./s3");
@@ -10,6 +11,13 @@ const pool = createPool();
 
 app.disable("x-powered-by");
 app.use(express.json());
+app.use(
+  cors({
+    origin: "https://shopnest.gowthamcloud.site",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 app.post("/api/products/:id/image", async (req, res) => {
   try {
     const productId = Number(req.params.id);
