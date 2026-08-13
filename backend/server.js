@@ -2,7 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const { createPool } = require("./db");
-const { uploadToS3 } = require("./s3");
+const {
+  uploadToS3,
+  getPresignedDownloadUrl,
+} = require("./s3");
 dotenv.config();
 
 const app = express();
@@ -95,7 +98,17 @@ app.get("/api/products", async (req, res) => {
     const [rows] = await pool.query(
       "SELECT id, name, description, price, stock, image_key, created_at FROM products ORDER BY id DESC",
     );
-    res.json(rows);
+
+    const products = await Promise.all(
+      rows.map(async (product) => ({
+        ...product,
+        image_url: product.image_key
+          ? await getPresignedDownloadUrl(product.image_key)
+          : null,
+      })),
+    );
+
+    res.json(products);
   } catch (error) {
     console.error("Products query failed:", error.message);
     res.status(500).json({ error: "Unable to fetch products" });

@@ -97,7 +97,14 @@ function App() {
               {products.map((product) => (
                 <article className="product-card" key={product.id}>
                   <div className="product-image">
-                    <span>Product</span>
+                    {product.image_url ? (
+                 <img
+                  src={product.image_url}
+                  alt={product.name}
+                  />
+             ) : (
+                  <span>No image</span>
+             )}
                   </div>
 
                   <div className="product-info">
