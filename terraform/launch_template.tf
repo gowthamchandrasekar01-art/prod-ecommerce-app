@@ -42,4 +42,10 @@ resource "aws_launch_template" "app" {
       Environment = "Production"
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      user_data,
+    ]
+  }
 }
