@@ -161,26 +161,42 @@ jobs:
 
           echo "SSM command ID: $COMMAND_ID"
 
-          for i in {1..30}; do
-            STATUS=$(aws ssm list-command-invocations \
+                    for i in {1..30}; do
+            SUCCESS_COUNT=$(aws ssm list-command-invocations \
               --command-id "$COMMAND_ID" \
               --details \
-              --query 'CommandInvocations[].Status' \
+              --query 'length(CommandInvocations[?Status==`Success`])' \
               --output text)
 
-            echo "SSM status: $STATUS"
+            TOTAL_COUNT=$(aws ssm list-command-invocations \
+              --command-id "$COMMAND_ID" \
+              --details \
+              --query 'length(CommandInvocations[])' \
+              --output text)
 
-            case "$STATUS" in
-              Success)
-                exit 0
-                ;;
-              Failed|Cancelled|TimedOut|Cancelling)
-                exit 1
-                ;;
-            esac
+            FAILED_COUNT=$(aws ssm list-command-invocations \
+              --command-id "$COMMAND_ID" \
+              --details \
+              --query 'length(CommandInvocations[?Status==`Failed` || Status==`Cancelled` || Status==`TimedOut` || Status==`Cancelling`])' \
+              --output text)
+
+            echo "SSM status: $SUCCESS_COUNT/$TOTAL_COUNT succeeded, $FAILED_COUNT failed"
+
+            if [ "$TOTAL_COUNT" -gt 0 ] && [ "$SUCCESS_COUNT" -eq "$TOTAL_COUNT" ]; then
+              echo "All SSM deployment targets succeeded."
+              exit 0
+            fi
+
+            if [ "$FAILED_COUNT" -gt 0 ]; then
+              echo "One or more SSM deployment targets failed."
+              exit 1
+            fi
 
             sleep 5
           done
+
+          echo "SSM deployment timed out"
+          exit 1
 
           echo "SSM deployment timed out"
           exit 1
