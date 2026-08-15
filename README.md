@@ -75,46 +75,7 @@ The platform is deployed across two Availability Zones with isolated public, pri
 ## Repository Structure
 
 ```text
-prod-ecommerce-app/
-├── .github/
-│   └── workflows/
-│       ├── ci.yml
-│       └── deploy.yml
-├── backend/
-│   ├── app.js
-│   ├── db.js
-│   ├── s3.js
-│   ├── server.js
-│   ├── tests/
-│   │   └── app.test.js
-│   ├── package.json
-│   └── package-lock.json
-├── database/
-│   ├── schema.sql
-│   └── README.md
-├── frontend/
-│   ├── src/
-│   ├── public/
-│   ├── package.json
-│   └── package-lock.json
-├── terraform/
-│   ├── alb.tf
-│   ├── asg.tf
-│   ├── cloudfront.tf
-│   ├── cloudwatch.tf
-│   ├── iam.tf
-│   ├── launch_template.tf
-│   ├── rds.tf
-│   ├── route53.tf
-│   ├── s3.tf
-│   ├── security_groups.tf
-│   ├── subnets.tf
-│   ├── vpc.tf
-│   ├── user_data.sh
-│   └── .terraform.lock.hcl
-├── .gitignore
-├── LICENSE
-└── README.md
+prod-ecommerce-app/ ├── .github/ │ └── workflows/ │ ├── ci.yml │ └── deploy.yml ├── backend/ │ ├── app.js │ ├── db.js │ ├── s3.js │ ├── server.js │ ├── tests/ │ │ └── app.test.js │ ├── package.json │ └── package-lock.json ├── database/ │ ├── schema.sql │ └── README.md ├── frontend/ │ ├── src/ │ ├── public/ │ ├── package.json │ └── package-lock.json ├── docs/ │ └── architecture/ │ └── shopnest-ecommerce-platform-on-AWS-3-tier-architecture.png ├── terraform/ │ ├── alb.tf │ ├── asg.tf │ ├── cloudfront.tf │ ├── cloudwatch.tf │ ├── iam.tf │ ├── launch_template.tf │ ├── rds.tf │ ├── route53.tf │ ├── s3.tf │ ├── security_groups.tf │ ├── subnets.tf │ ├── vpc.tf │ ├── user_data.sh │ └── .terraform.lock.hcl ├── .gitignore ├── LICENSE └── README.md
 ```
 
 ## Network Architecture
