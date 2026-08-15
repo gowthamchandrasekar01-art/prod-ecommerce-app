@@ -15,60 +15,12 @@ Production-style e-commerce platform deployed on AWS with a highly available two
 | Backend deployment | AWS Systems Manager                                   |
 
 ## Architecture
+## Architecture
 
-```text
-                           Internet
-                              |
-                    Route 53 + ACM
-                              |
-                     CloudFront HTTPS
-                              |
-                         S3 Frontend
-                              |
-                    React Production Build
-                              |
-                              +----------------------+
-                                                     |
-                                                API HTTPS
-                                                     |
-                                            Application Load
-                                               Balancer
-                                             /           \
-                                            /             \
-                                  Private EC2           Private EC2
-                                      AZ-a                   AZ-b
-                                  Node.js/Express        Node.js/Express
-                                      |                       |
-                                      +----------+------------+
-                                                 |
-                                           Amazon RDS
-                                             MySQL
-                                                 |
-                                      AWS Secrets Manager
+![ShopNest AWS Architecture](docs/architecture/shopnest-ecommerce-platform-on-AWS-3-tier-architecture.png)
 
-Application assets
-        |
-      S3
-        |
-      KMS
+The platform is deployed across two Availability Zones with isolated public, private application, and database subnets. The frontend is delivered through CloudFront and S3, while API traffic is routed through an internet-facing Application Load Balancer to the private EC2 Auto Scaling tier. The application tier connects to Multi-AZ Amazon RDS for MySQL.
 
-Operations
-   |
-CloudWatch
-   |
-SNS Email Alerts
-
-Infrastructure
-   |
-Terraform
-
-CI/CD
-   |
-GitHub Actions
-   |
-GitHub OIDC
-   |
-AWS IAM
 ```
 
 ## Key Highlights
