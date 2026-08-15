@@ -15,12 +15,11 @@ Production-style e-commerce platform deployed on AWS with a highly available two
 | Backend deployment | AWS Systems Manager                                   |
 
 ## Architecture
-## Architecture
 
+```text
 ![ShopNest AWS Architecture](docs/architecture/shopnest-ecommerce-platform-on-AWS-3-tier-architecture.png)
 
 The platform is deployed across two Availability Zones with isolated public, private application, and database subnets. The frontend is delivered through CloudFront and S3, while API traffic is routed through an internet-facing Application Load Balancer to the private EC2 Auto Scaling tier. The application tier connects to Multi-AZ Amazon RDS for MySQL.
-
 ```
 
 ## Key Highlights
@@ -75,7 +74,49 @@ The platform is deployed across two Availability Zones with isolated public, pri
 ## Repository Structure
 
 ```text
-prod-ecommerce-app/ ├── .github/ │ └── workflows/ │ ├── ci.yml │ └── deploy.yml ├── backend/ │ ├── app.js │ ├── db.js │ ├── s3.js │ ├── server.js │ ├── tests/ │ │ └── app.test.js │ ├── package.json │ └── package-lock.json ├── database/ │ ├── schema.sql │ └── README.md ├── frontend/ │ ├── src/ │ ├── public/ │ ├── package.json │ └── package-lock.json ├── docs/ │ └── architecture/ │ └── shopnest-ecommerce-platform-on-AWS-3-tier-architecture.png ├── terraform/ │ ├── alb.tf │ ├── asg.tf │ ├── cloudfront.tf │ ├── cloudwatch.tf │ ├── iam.tf │ ├── launch_template.tf │ ├── rds.tf │ ├── route53.tf │ ├── s3.tf │ ├── security_groups.tf │ ├── subnets.tf │ ├── vpc.tf │ ├── user_data.sh │ └── .terraform.lock.hcl ├── .gitignore ├── LICENSE └── README.md
+prod-ecommerce-app/
+├── .github/
+│   └── workflows/
+│       ├── ci.yml
+│       └── deploy.yml
+├── backend/
+│   ├── app.js
+│   ├── db.js
+│   ├── s3.js
+│   ├── server.js
+│   ├── tests/
+│   │   └── app.test.js
+│   ├── package.json
+│   └── package-lock.json
+├── database/
+│   ├── schema.sql
+│   └── README.md
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── package-lock.json
+├── docs/
+│   └── architecture/
+│       └── shopnest-ecommerce-platform-on-AWS-3-tier-architecture.png
+├── terraform/
+│   ├── alb.tf
+│   ├── asg.tf
+│   ├── cloudfront.tf
+│   ├── cloudwatch.tf
+│   ├── iam.tf
+│   ├── launch_template.tf
+│   ├── rds.tf
+│   ├── route53.tf
+│   ├── s3.tf
+│   ├── security_groups.tf
+│   ├── subnets.tf
+│   ├── vpc.tf
+│   ├── user_data.sh
+│   └── .terraform.lock.hcl
+├── .gitignore
+├── LICENSE
+└── README.md
 ```
 
 ## Network Architecture
@@ -110,13 +151,12 @@ The backend is a Node.js and Express API listening on port `3000`.
 
 ### API Endpoints
 
-| Method | Endpoint                  | Purpose                         |
-| ------ | ------------------------- | ------------------------------- |
-| GET    | `/`                       | Application information         |
-| GET    | `/health`                 | Application and database health |
-| GET    | `/api/products`           | Retrieve products               |
-| GET    | `/api/products/:id`       | Retrieve a specific product     |
-| POST   | `/api/products/:id/image` | Upload a product image          |
+| Method | Endpoint            | Purpose                         |
+| ------ | ------------------- | ------------------------------- |
+| GET    | `/`                 | Application information         |
+| GET    | `/health`           | Application and database health |
+| GET    | `/api/products`     | Retrieve products               |
+| GET    | `/api/products/:id` | Retrieve a specific product     |
 
 The `/health` endpoint is used by both the load balancer and post-deployment validation.
 
