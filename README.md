@@ -16,7 +16,7 @@ Production-style e-commerce platform deployed on AWS with a highly available two
 
 ## Architecture
 
-```text
+
 ![ShopNest AWS Architecture](docs/architecture/shopnest-ecommerce-platform-on-AWS-3-tier-architecture.png)
 
 The platform is deployed across two Availability Zones with isolated public, private application, and database subnets. The frontend is delivered through CloudFront and S3, while API traffic is routed through an internet-facing Application Load Balancer to the private EC2 Auto Scaling tier. The application tier connects to Multi-AZ Amazon RDS for MySQL.
