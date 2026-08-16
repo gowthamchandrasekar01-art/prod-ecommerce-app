@@ -94,6 +94,7 @@ prod-ecommerce-app/
 │   └── workflows/
 │       ├── ci.yml
 │       └── deploy.yml
+│
 ├── backend/
 │   ├── app.js
 │   ├── db.js
@@ -103,17 +104,31 @@ prod-ecommerce-app/
 │   │   └── app.test.js
 │   ├── package.json
 │   └── package-lock.json
+│
 ├── database/
 │   ├── schema.sql
 │   └── README.md
+│
 ├── frontend/
 │   ├── src/
 │   ├── public/
 │   ├── package.json
 │   └── package-lock.json
+│
 ├── docs/
-│   └── architecture/
-│       └── shopnest-ecommerce-platform-on-AWS-3-tier-architecture.png
+│   ├── architecture/
+│   │   └── shopnest-ecommerce-platform-on-AWS-3-tier-architecture.png
+│   │
+│   └── screenshots/
+│       ├── 01-networking/
+│       ├── 02-security/
+│       ├── 03-compute/
+│       ├── 04-database/
+│       ├── 05-storage-cdn/
+│       ├── 06-application/
+│       ├── 07-cicd/
+│       └── 08-monitoring/
+│
 ├── terraform/
 │   ├── alb.tf
 │   ├── asg.tf
@@ -129,6 +144,7 @@ prod-ecommerce-app/
 │   ├── vpc.tf
 │   ├── user_data.sh
 │   └── .terraform.lock.hcl
+│
 ├── .gitignore
 ├── LICENSE
 └── README.md
