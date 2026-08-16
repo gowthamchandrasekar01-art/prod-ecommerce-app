@@ -1,4 +1,4 @@
-# ShopNest — Production E-Commerce Application
+# ShopNest — Highly Available 3-Tier E-Commerce Application on AWS
 
 Production-style e-commerce platform deployed on AWS with a highly available two-AZ application tier, private networking, managed MySQL, Terraform IaC, GitHub Actions CI/CD, GitHub OIDC, CloudWatch monitoring, SNS alerting, and SSM-based deployments.
 
