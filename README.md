@@ -32,18 +32,20 @@ The platform is deployed across two Availability Zones with isolated public, pri
 * GitHub Actions CI/CD with OIDC-based AWS authentication
 * CloudWatch alarms + SNS notifications and SSM-based backend deployment
 
-Evidence
+##Evidence
 
 The repository includes detailed implementation and validation evidence for each major layer of the platform.
 
-* Networking Evidence
-* Security Evidence
-* Compute & High Availability Evidence
-* Database Evidence
-* Storage & CDN Evidence
-* Application Evidence
-* CI/CD Evidence
-* Monitoring Evidence
+## Evidence
+
+- [Networking Evidence](docs/screenshots/01-networking/)
+- [Security Evidence](docs/screenshots/02-security/)
+- [Compute & High Availability](docs/screenshots/03-compute/)
+- [Database Evidence](docs/screenshots/04-database/)
+- [Storage & CDN Evidence](docs/screenshots/05-storage-cdn/)
+- [Application Evidence](docs/screenshots/06-application/)
+- [CI/CD Evidence](docs/screenshots/07-cicd/)
+- [Monitoring Evidence](docs/screenshots/08-monitoring/)
 
 ## Technology Stack
 
